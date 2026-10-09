@@ -1,4 +1,6 @@
-﻿namespace Lab4
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Lab4
 {
     public class Purple
     {
@@ -6,7 +8,29 @@
         {
 
             // code here
+            double max = double.MinValue;
+            double sum = 0;
+            double avg = 0;
+            int target = 0;
 
+            for (int i = 0; i < array.Length; i++)
+            {
+                sum += array[i];
+                if (max < array[i])
+                {
+                    max = Math.Max(max, array[i]);
+                    target = i;
+                }
+                
+                
+            }
+
+            avg = sum / array.Length;
+
+            for (int i = array.Length-1; i > target; i--)
+            {
+                array[i] = avg;
+            }
             // end
 
         }
@@ -15,6 +39,23 @@
             int[] even = null, odd = null;
 
             // code here
+            
+            even = new int[(array.Length + 1) / 2];
+            odd = new int[array.Length / 2];
+
+            for(int i = 0, j = 0, h = 0; i < array.Length; i ++)
+            {
+                if(i % 2 == 0)
+                {
+                    even[j] = array[i];
+                    j++;
+                }
+                else
+                {
+                    odd[h] = array[i];
+                    h++;
+                }
+            }
 
             // end
 
@@ -26,6 +67,39 @@
 
             // code here
 
+            answer = new int[array.Length + 1];
+            double avg = 0;
+            int sum = 0;
+            int target = 0;
+            double minDelta = double.MaxValue;
+
+            for(int i = 0; i < array.Length; i++)
+            {
+                sum += array[i];
+            }
+
+            avg = (double)sum / array.Length;
+
+            for(int i = 0; i < array.Length; i++)
+            {
+                if (minDelta > Math.Abs(avg - array[i]))
+                {
+                    target = i;
+                    minDelta = Math.Abs(avg - array[i]);
+                }
+            }
+
+            for(int i = 0, j = 0; i < array.Length; i++, j++)
+            {
+                answer[j] = array[i];
+                if (i == target)
+                {
+                    j++;
+                    answer[j] = P;
+                }
+            }
+
+
             // end
 
             return answer;
@@ -34,7 +108,28 @@
         {
 
             // code here
+            int[] tempArr = new int[array.Length];
 
+            for(int readLeft = 0, writeLeft = 0, readRight = array.Length-1, writeRight = array.Length-1; readLeft < array.Length; readLeft++, readRight--)
+            {
+                if (array[readLeft] >= 0)
+                {
+                    tempArr[writeLeft] = array[readLeft];
+                    writeLeft++;
+                }
+                if (array[readRight] < 0)
+                {
+                    tempArr[writeRight] = array[readRight];
+                    writeRight--;
+                }
+            }
+
+            for (int i = 0; i < array.Length; i++) 
+            {
+                array[i] = tempArr[i];
+            }
+            
+            
             // end
 
         }
@@ -43,7 +138,25 @@
             int[] answer = null;
 
             // code here
+            answer = new int[A.Length + B.Length];
 
+            if (k > A.Length) k = A.Length;
+
+            for(int i = 0, a = 0, b = 0; i < answer.Length; i++)
+            {
+                if (i > k - 1 && b < B.Length)
+                {
+                    answer[i] = B[b];
+                    b++;
+                }
+                else
+                {
+                    answer[i] = A[a];
+                    a++;
+                }
+            }
+
+            // напомнить об ошибке хз.
             // end
 
             return answer;
@@ -53,6 +166,21 @@
             int[] sum = null, dif = null;
 
             // code here
+            if (A.Length != B.Length) return (sum, dif);
+
+            sum = new int[A.Length];
+            dif = new int[A.Length];
+
+            for(int i = 0, j = 0; i < sum.Length; i++)
+            {
+                sum[i] = A[i] + B[i];
+            }
+
+            for (int i = 0, j = 0; i < dif.Length; i++)
+            {
+                dif[i] = A[i] - B[i];
+            }
+
 
             // end
 
