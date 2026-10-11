@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.Design;
+using System.IO.IsolatedStorage;
 
 namespace Lab4
 {
@@ -192,6 +194,26 @@ namespace Lab4
 
             // code here
 
+            
+            int max = int.MinValue;
+            int min = int.MaxValue;
+            int check = array[0];
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                max = Math.Max(max, array[i]);
+                min = Math.Min(min, array[i]);
+            }
+
+            if (min - max == 0) return normalized;
+
+            normalized = new double[array.Length];
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                normalized[i] = (2 * ((array[i] - min)/(double)(max - min)) - 1);
+            }
+
             // end
             
             return normalized;
@@ -201,6 +223,58 @@ namespace Lab4
             int[] C = null;
 
             // code here
+            C = new int[A.Length + B.Length];
+
+            int i = 1, n = A.Length;
+
+            while (i < n)
+            {
+                if (i == 0 || A[i] <= A[i - 1])
+                    i++;
+                else
+                {
+                    (A[i], A[i - 1]) = (A[i - 1], A[i]);
+                    i--;
+                }
+
+            }
+
+            i = 1;
+            n = B.Length;
+
+            while (i < n)
+            {
+                if (i == 0 || B[i] <= B[i - 1])
+                    i++;
+                else
+                {
+                    (B[i], B[i - 1]) = (B[i - 1], B[i]);
+                    i--;
+                }
+
+            }
+
+            i = 0;
+            int j = 0, k = 0;
+
+            while (i < A.Length && j < B.Length)
+            {
+                if (A[i] >= B[j])
+                    C[k++] = A[i++];
+                else
+                    C[k++] = B[j++];
+                
+            }
+
+            while (i < A.Length)
+            {
+                C[k++] = A[i++];
+            }
+
+            while (j < B.Length)
+            {
+                C[k++] = B[j++];
+            }
 
             // end
 
