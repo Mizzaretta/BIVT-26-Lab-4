@@ -58,7 +58,6 @@ namespace Lab4
                     h++;
                 }
             }
-
             // end
 
             return (even, odd);
@@ -100,8 +99,6 @@ namespace Lab4
                     answer[j] = P;
                 }
             }
-
-
             // end
 
             return answer;
@@ -130,8 +127,6 @@ namespace Lab4
             {
                 array[i] = tempArr[i];
             }
-            
-            
             // end
 
         }
@@ -157,8 +152,6 @@ namespace Lab4
                     a++;
                 }
             }
-
-            // напомнить об ошибке хз.
             // end
 
             return answer;
@@ -263,7 +256,6 @@ namespace Lab4
                     C[k++] = A[i++];
                 else
                     C[k++] = B[j++];
-                
             }
 
             while (i < A.Length)
@@ -381,6 +373,8 @@ namespace Lab4
 
             int countBright = 0;
             int countDim = 0;
+
+            if (raw == null) return (null, null, null);
 
             for (int i = 0; i < raw.Length; i++)
             {
