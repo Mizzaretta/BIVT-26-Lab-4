@@ -140,11 +140,11 @@ namespace Lab4
             int[] answer = null;
 
             // code here
+            if (k > A.Length) return A;
+
             answer = new int[A.Length + B.Length];
 
-            if (k > A.Length) k = A.Length;
-
-            for(int i = 0, a = 0, b = 0; i < answer.Length; i++)
+            for (int i = 0, a = 0, b = 0; i < answer.Length; i++)
             {
                 if (i > k - 1 && b < B.Length)
                 {
@@ -284,7 +284,25 @@ namespace Lab4
         {
 
             // code here
+            int iMax = 0;
+            int shift = 0;
+            int n = array.Length;
 
+            for (int i = 0; i < n; i++)
+            {
+                if (array[iMax] < array[i])
+                    iMax = i;
+            }
+
+            shift = iMax % n;
+
+            for (int i = 0; i < shift; i++)
+            {
+                int temp = array[n-1];
+                for (int j = n - 1; j > 0; j--)
+                    array[j] = array[j - 1];
+                array[0] = temp;
+            }
             // end
 
         }
@@ -293,6 +311,13 @@ namespace Lab4
 
             // code here
 
+            if (N >= array.Length || N == 1) return;
+
+            int i = N - 2, j = N;
+            while(i >= 0 && j < array.Length)
+            {
+                array[j++] = array[i--];
+            }
             // end
 
         }
@@ -302,7 +327,44 @@ namespace Lab4
             double[] Xext = null, Yext = null;
 
             // code here
+            if (a == b && n > 1 || a > b) return (Xext, Yext); 
 
+            double xMember = Math.Min(a, b);
+
+            X = new double[n]; 
+            Y = new double[n];
+
+            int count = 0;
+
+            double step = (b - a) / (n - 1);
+
+            for(int i = 0; i <= n - 1; i++)
+            {
+                X[i] = xMember;
+                Y[i] = Math.Cos(xMember) + xMember * Math.Sin(xMember);
+                xMember += step;
+            }
+
+            for (int i = 1; i < Y.Length - 1; i++)
+            {
+                if ((Y[i] > Y[i + 1] && Y[i] > Y[i - 1]) || (Y[i] < Y[i + 1] && Y[i] < Y[i - 1]))
+                {
+                    count++;
+                }
+            }
+
+            Xext = new double[count];
+            Yext = new double[count];
+
+            for (int i = 1, j = 0; i < Y.Length - 1; i++)
+            {
+                if ((Y[i] > Y[i + 1] && Y[i] > Y[i - 1]) || (Y[i] < Y[i + 1] && Y[i] < Y[i - 1]))
+                {
+                    Yext[j] = Y[i];
+                    Xext[j] = X[i];
+                    j++;
+                }
+            }
             // end
 
             return (Xext, Yext);
@@ -313,6 +375,63 @@ namespace Lab4
             double[] bright = null, normal = null, dim = null;
 
             // code here
+            double average = 0;
+            double NormalAver = 0;
+            double sum = 0;
+
+            int countBright = 0;
+            int countDim = 0;
+
+            for (int i = 0; i < raw.Length; i++)
+            {
+                sum += raw[i];
+            }
+            average = sum / raw.Length;
+
+            for (int i = 0; i < raw.Length; i++)
+            {
+                if (raw[i] > 2 * average)
+                    countBright++;
+                if (raw[i] < average / 2)
+                    countDim++;
+            }
+
+            bright = new double[countBright];
+            dim = new double[countDim];
+            normal = new double[raw.Length];
+
+            sum = 0;
+
+            for (int i = 0, j = 0, k = 0; i < raw.Length; i++)
+            {
+                if (raw[i] > 2 * average)
+                    bright[j++] = raw[i];
+                else if (raw[i] < average / 2)
+                    dim[k++] = raw[i];
+                else
+                    sum += raw[i];
+            }
+
+            NormalAver = sum / (raw.Length - countDim - countBright);
+
+            for (int i = 0; i < raw.Length; i++)
+            {
+                if (raw[i] > 2 * average || raw[i] < average / 2)
+                    normal[i] = (raw[i] + NormalAver) / 2;
+                else
+                    normal[i] = raw[i];
+            }
+
+            for (int i = 0; i < normal.Length; i++)
+            {
+                for(int j = 0; j < normal.Length - i - 1; j++)
+                {
+                    if (normal[j] < normal[j + 1])
+                        (normal[j], normal[j + 1]) = (normal[j+1], normal[j]);
+                }
+            }
+
+            Console.WriteLine(NormalAver);
 
             // end
 
