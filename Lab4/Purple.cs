@@ -424,9 +424,6 @@ namespace Lab4
                         (normal[j], normal[j + 1]) = (normal[j+1], normal[j]);
                 }
             }
-
-            Console.WriteLine(NormalAver);
-
             // end
 
             return (bright, normal, dim);
